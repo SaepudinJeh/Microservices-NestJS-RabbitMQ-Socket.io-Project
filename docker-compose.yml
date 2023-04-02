@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+  messages-service:
+    build:
+      context: .
+      target: development
+      dockerfile: ./apps/messages-service/Dockerfile
+    command: npm run start:dev messages-service
+    env_file:
+      - ./apps/messages-service/.env
+    depends_on:
+      - mongo
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3000:3000'
+
+  mongo:
+    image: mongo:focal
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongodb-primary:/data/db
+      - ./mongodb-primary-config:/data/configdb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password123
