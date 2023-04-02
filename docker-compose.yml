@@ -18,6 +18,24 @@ services:
     ports:
       - '3000:3000'
 
+  notification-service:
+    build:
+      context: .
+      dockerfile: ./apps/notification-service/Dockerfile
+      target: development
+    command: npm run start:dev notification-service
+    env_file:
+      - ./apps/notification-service/.env
+    depends_on:
+      - mongo
+      - rabbitmq
+      - messages-service
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3001:3000'
+
   mongo:
     image: mongo:focal
     restart: always

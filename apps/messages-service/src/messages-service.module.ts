@@ -5,10 +5,11 @@ import { MessageGateway } from './message.gateway';
 
 import { MessagesServiceController } from './controllers/messages-service.controller';
 import { MessagesService } from './services/messages-service.service';
-import { DatabaseModule } from '@app/common';
+import { DatabaseModule, RmqModule } from '@app/common';
 import { Room, RoomSchema } from './schemas/room.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MessageRepository } from './repositories/message.repository';
+import { MESSAGE_SERVICE } from './constants/service.constant';
 
 @Module({
   imports: [
@@ -22,6 +23,9 @@ import { MessageRepository } from './repositories/message.repository';
     }),
     DatabaseModule,
     MongooseModule.forFeature([{ name: Room.name, schema: RoomSchema }]),
+    RmqModule.register({
+      name: MESSAGE_SERVICE,
+    }),
   ],
   controllers: [MessagesServiceController],
   providers: [MessagesService, MessageGateway, MessageRepository],

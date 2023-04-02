@@ -8,7 +8,7 @@ interface RmqModuleOptions {
 }
 
 @Module({
-  providers: [],
+  providers: [RmqService],
   exports: [RmqService],
 })
 export class RmqModule {

@@ -1,4 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { lastValueFrom } from 'rxjs';
+import { MESSAGE_SERVICE } from '../constants/service.constant';
 import { CreateRoomRequestDto } from '../dto/createRoomRequest.dto';
 import { SetStatusRoomRequestDto } from '../dto/setStatusRequest.dto';
 import { UpdateRoomRequestDto } from '../dto/updateRoomRequest.dto';
@@ -7,11 +10,19 @@ import { Room } from '../schemas/room.schema';
 
 @Injectable()
 export class MessagesService {
-  constructor(private readonly messageRepository: MessageRepository) {}
+  constructor(
+    private readonly messageRepository: MessageRepository,
+    @Inject(MESSAGE_SERVICE) private notificationClient: ClientProxy,
+  ) {}
 
   async createRoom(
     createRoomRequestDto: CreateRoomRequestDto,
   ): Promise<Room | null> {
+    await lastValueFrom(
+      this.notificationClient.emit('notification', {
+        room: createRoomRequestDto,
+      }),
+    );
     return await this.messageRepository.create(createRoomRequestDto);
   }
 
