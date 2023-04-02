@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
-import { ChatGateway } from './chat.gateway';
+import { MessageGateway } from './message.gateway';
 
 import { MessagesServiceController } from './messages-service.controller';
 import { MessagesServiceService } from './messages-service.service';
@@ -18,6 +18,6 @@ import { MessagesServiceService } from './messages-service.service';
     // DatabaseModule,
   ],
   controllers: [MessagesServiceController],
-  providers: [MessagesServiceService, ChatGateway],
+  providers: [MessagesServiceService, MessageGateway],
 })
 export class MessagesServiceModule {}

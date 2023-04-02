@@ -8,8 +8,8 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway({ namespace: '/chat' })
-export class ChatGateway implements OnGatewayInit {
+@WebSocketGateway({ namespace: '/message' })
+export class MessageGateway implements OnGatewayInit {
   @WebSocketServer() wss: Server;
 
   private logger: Logger = new Logger('Chat Gateway');
@@ -18,13 +18,13 @@ export class ChatGateway implements OnGatewayInit {
     this.logger.log('Initialized!');
   }
 
-  @SubscribeMessage('event')
-  onEvent(
+  @SubscribeMessage('message')
+  onEventMessage(
     @MessageBody() message: { sender: string; room: string; message: string },
     client: Socket,
   ) {
     console.log('message', message);
-    return this.wss.to(message.room).emit('event', message);
+    return this.wss.to(message.room).emit('message', message);
   }
 
   @SubscribeMessage('joinRoom')
