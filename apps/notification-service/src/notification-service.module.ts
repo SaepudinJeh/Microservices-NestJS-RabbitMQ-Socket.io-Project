@@ -5,6 +5,7 @@ import * as Joi from 'joi';
 
 import { NotificationServiceController } from './notification-service.controller';
 import { NotificationService } from './notification-service.service';
+import { NotificationGateway } from './notification.gateway';
 
 @Module({
   imports: [
@@ -19,6 +20,6 @@ import { NotificationService } from './notification-service.service';
     RmqModule,
   ],
   controllers: [NotificationServiceController],
-  providers: [NotificationService],
+  providers: [NotificationService, NotificationGateway],
 })
 export class NotificationServiceModule {}

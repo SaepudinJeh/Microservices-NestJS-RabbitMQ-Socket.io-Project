@@ -8,7 +8,11 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 
-@WebSocketGateway({ namespace: '/message' })
+@WebSocketGateway({
+  namespace: '/message',
+  allowEIO3: true,
+  cors: { origin: true, credentials: true },
+})
 export class MessageGateway implements OnGatewayInit {
   @WebSocketServer() wss: Server;
 
