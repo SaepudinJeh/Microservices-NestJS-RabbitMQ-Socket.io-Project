@@ -31,6 +31,12 @@ export class MessagesService {
   ): Promise<Room | null> {
     const { _id, ...payload } = updateRoomRequestDto;
 
+    await lastValueFrom(
+      this.notificationClient.emit('notification', {
+        room: updateRoomRequestDto,
+      }),
+    );
+
     return await this.messageRepository.findOneAndUpdate(
       { _id },
       { $set: payload },
