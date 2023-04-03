@@ -22,7 +22,7 @@
   </p>
 
 ## Description
-<p style="padding:10px; font-size:16px;">Sample project message app with a microservices architecture that is interconnected with message service and notification service using RabbitMQ as a bridge between services, and socket.io to send message realtime, push send notification when created room and update room and main database used mongoDB</p>
+<p style="padding:10px; font-size:16px;">Project message app with a microservices architecture that is interconnected with message service and notification service using RabbitMQ as a bridge between services, and socket.io to send message realtime, push send notification when created room and update room and main database used mongoDB</p>
 
 ## Running the app
 
